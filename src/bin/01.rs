@@ -18,29 +18,18 @@ fn calories(input: &str) -> IResult<&str, Vec<u32>> {
     Ok((input, calories))
 }
 pub fn main() -> Result<()> {
-    let content = fs::read_to_string("./input.txt").unwrap();
+    let content = fs::read_to_string("./inputs/01.txt").unwrap();
     let (_, results) = many1(calories)(&content).unwrap();
-    let mut elfs = vec![];
+    let mut elfs: Vec<u32> = vec![];
 
     for calories in results {
-        elfs.push(calories.into_iter().fold(0, |acc, value| acc + value));
+        elfs.push(calories.into_iter().sum());
     }
     elfs.sort();
     elfs.reverse();
 
     dbg!(elfs.first());
 
-    dbg!(elfs.into_iter().take(3).fold(0, |acc, value| acc + value));
+    dbg!(elfs.into_iter().take(3).sum::<u32>());
     Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = main(2, 2);
-        assert_eq!(result, 4);
-    }
 }
