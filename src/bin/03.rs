@@ -1,15 +1,18 @@
+use std::collections::HashSet;
 use std::{error::Error, fs};
 
 fn get_priority(s1: &str, s2: &str) -> Option<u32> {
+    let mut s2_hash = HashSet::new();
+    for s2_char in s2.chars() {
+        s2_hash.insert(s2_char);
+    }
     for c1 in s1.chars() {
-        for c2 in s2.chars() {
-            if c1 == c2 {
-                if c1 > 'a' {
-                    return Some(c1 as u8 as u32 - 96_u32);
-                }
-                if c1 > 'A' {
-                    return Some(c1 as u8 as u32 - 38_u32);
-                }
+        if s2_hash.contains(&c1) {
+            if c1 > 'a' {
+                return Some(c1 as u8 as u32 - 96_u32);
+            }
+            if c1 > 'A' {
+                return Some(c1 as u8 as u32 - 38_u32);
             }
         }
     }
