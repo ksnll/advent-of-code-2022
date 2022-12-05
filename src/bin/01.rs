@@ -22,9 +22,10 @@ pub fn main() -> Result<()> {
     let (_, results) = many1(calories)(&content).unwrap();
     let mut elfs: Vec<u32> = vec![];
 
-    for calories in results {
+    for calories in &results {
         elfs.push(calories.into_iter().sum());
     }
+
     elfs.sort();
     elfs.reverse();
 
